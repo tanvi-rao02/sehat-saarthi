@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const User = require('../models/User');
+const User = require('../models/user');
 const { sendVerificationEmail, sendPasswordResetEmail } = require('../services/email.service');
 
 const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, {
