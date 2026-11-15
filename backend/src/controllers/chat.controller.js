@@ -1,5 +1,5 @@
 
-const Chat = require('../models/Chat');
+const Chat = require('../models/chat');
 const Message = require('../models/Message');
 const gemini = require('../services/gemini.service');
 
