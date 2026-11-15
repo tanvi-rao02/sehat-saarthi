@@ -1,0 +1,20 @@
+.env
+.env.local
+.env.production
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.next/
+out/
+build/
+uploads/
+.DS_Store
+*.log
+.vercel
+# Python environment files
+.python-version
+
+# Local database and editor files
+.vscode/
