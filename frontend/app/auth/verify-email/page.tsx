@@ -1,10 +1,10 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
@@ -22,6 +22,11 @@ export default function VerifyEmailPage() {
     const verify = async () => {
       try {
         const API = process.env.NEXT_PUBLIC_API_URL;
+
+        if (!API) {
+          throw new Error('API URL is not configured.');
+        }
+
         const response = await fetch(
           `${API}/auth/verify/${encodeURIComponent(token)}`
         );
@@ -50,10 +55,7 @@ export default function VerifyEmailPage() {
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-md w-full text-center rounded-xl border p-8 shadow-sm">
         <h1 className="text-2xl font-bold mb-4">SehatSaarthi</h1>
-
-        <p className="mb-6">
-          {message}
-        </p>
+        <p className="mb-6">{message}</p>
 
         {!loading && success && (
           <a
@@ -68,3 +70,14 @@ export default function VerifyEmailPage() {
   );
 }
 
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center p-6">
+        Loading email verification...
+      </main>
+    }>
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
