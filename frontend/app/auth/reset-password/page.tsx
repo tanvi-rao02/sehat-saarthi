@@ -1,10 +1,10 @@
 
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
@@ -14,7 +14,7 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage('');
 
@@ -37,6 +37,10 @@ export default function ResetPasswordPage() {
 
     try {
       const API = process.env.NEXT_PUBLIC_API_URL;
+
+      if (!API) {
+        throw new Error('API URL is not configured.');
+      }
 
       const response = await fetch(`${API}/auth/reset-password`, {
         method: 'POST',
@@ -122,3 +126,16 @@ export default function ResetPasswordPage() {
   );
 }
 
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+          Loading password reset...
+        </main>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}
