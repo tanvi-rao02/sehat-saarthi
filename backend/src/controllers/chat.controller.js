@@ -1,6 +1,6 @@
 
 const Chat = require('../models/chat');
-const Message = require('../models/Message');
+const Message = require('../models/message');
 const gemini = require('../services/gemini.service');
 
 const setSSE = (res) => {

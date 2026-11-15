@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { protect, adminOnly } = require('../middleware/auth.middleware');
-const User = require('../models/User');
-const Chat = require('../models/Chat');
+const User = require('../models/user');
+const Chat = require('../models/chat');
 const MedicalReport = require('../models/MedicalReport');
 const Feedback = require('../models/Feedback');
 
